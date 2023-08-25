@@ -29,7 +29,7 @@ export class ProductManager {
             const products = JSON.parse(data);
 
             const found = products.find(item => item.code === product.code);
-            if (found) return '[ERR] code already exists';
+            if (found) return '[400] code already exists';
 
             const productToAdd = { id: this.#generateID(products), ...product };
             products.push(productToAdd);
@@ -51,7 +51,7 @@ export class ProductManager {
         }
     }
 
-    async getProductsById(id) {
+    async getProductById(id) {
         try {
             const data = await fsPromises.readFile(this.#path, 'utf-8');
             const products = JSON.parse(data);

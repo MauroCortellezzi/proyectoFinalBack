@@ -17,6 +17,13 @@ export class CartManager {
         }
     }
 
+    async getCart() {
+        if (!fs.existsSync(this.#_path)) return "[ERROR] Base de datos no existe";
+        let BD = await fs.readFileSync(this.#_path, "utf8");
+        let carts = JSON.parse(BD);
+        return carts;
+      }
+
     #generateID(data) {
         return (data.length === 0) ? 1 : data[data.length - 1].id + 1
     }

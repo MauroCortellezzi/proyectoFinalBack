@@ -24,13 +24,13 @@ router.get('/:pid', async (req, res) => {
     res.status(200).json({status: 'success',payload: result })
 })
 
-router.put('/id', async (req, res) =>{
+router.put('/:id', async (req, res) =>{
     const id = parseInt(req.params.id)
     const productUpdate = req.body
-    const products = await productManager.getProduct()
+    const products = await productManager.getProducts()
     const idProduct = products.find((product) => product.id === id)
     if (!idProduct) return res.status(404).json({ status: "error", error: "ID does not exists" })
-    const newProduc = await productManager.updateProduct(id, productUpdate)
+    const newProduct = await productManager.updateProduct(id, productUpdate)
     res.status(200).json({ status: "succes", payload: newProduct });
 })
 
@@ -46,7 +46,7 @@ router.post('/', async (req,res) =>{
 
 router.delete('/:id', async (req, res) => {
     const id = parseInt(req.params.id)
-    const products = await productManager.getProduct()
+    const products = await productManager.getProducts()
     const exist = products.find((product) => product.id === id)
     if(!exist) return res.status(404).json({ status: "error", error: "ID does not exist" });
     await productManager.deleteProduct(id)
