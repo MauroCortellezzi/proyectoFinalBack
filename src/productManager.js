@@ -37,7 +37,7 @@ export class ProductManager {
             await fsPromises.writeFile(this.#path, JSON.stringify(products, null, 2));
             return productToAdd;
         } catch (error) {
-            return '[ERR] Error adding product';
+            return '[400] Error adding product';
         }
     }
 
@@ -47,7 +47,7 @@ export class ProductManager {
             const products = JSON.parse(data);
             return products;
         } catch (error) {
-            return '[ERR] Error fetching products';
+            return '[400] Error fetching products';
         }
     }
 
@@ -57,11 +57,11 @@ export class ProductManager {
             const products = JSON.parse(data);
 
             const product = products.find(item => item.id === id);
-            if (!product) return '[ERR] Product not found';
+            if (!product) return '[400] Product not found';
 
             return product;
         } catch (error) {
-            return '[ERR] Error fetching product by ID';
+            return '[400] Error fetching product by ID';
         }
     }
 
@@ -86,7 +86,7 @@ export class ProductManager {
             await fsPromises.writeFile(this.#path, JSON.stringify(newProducts, null, 2));
             return newProducts.find(item => item.id === id);
         } catch (error) {
-            return '[ERR] Error updating product';
+            return '[400] Error updating product';
         }
     }
 
@@ -96,12 +96,12 @@ export class ProductManager {
             const products = JSON.parse(data);
 
             const newProducts = products.filter(item => item.id !== id);
-            if (products.length === newProducts.length) return '[ERR] Product not found';
+            if (products.length === newProducts.length) return '[400] Product not found';
 
             await fsPromises.writeFile(this.#path, JSON.stringify(newProducts, null, 2));
             return newProducts;
         } catch (error) {
-            return '[ERR] Error deleting product';
+            return '[400] Error deleting product';
         }
     }
 }

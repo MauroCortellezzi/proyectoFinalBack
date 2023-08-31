@@ -18,8 +18,8 @@ export class CartManager {
     }
 
     async getCart() {
-        if (!fs.existsSync(this.#_path)) return "[ERROR] Base de datos no existe";
-        let BD = await fs.readFileSync(this.#_path, "utf8");
+        if (!fs.existsSync(this.#path)) return "[400] Base de datos no existe";
+        let BD = await fs.readFileSync(this.#path, "utf8");
         let carts = JSON.parse(BD);
         return carts;
       }
@@ -50,7 +50,7 @@ export class CartManager {
 
     async addProductToCart(cid,pid) {
         if(!fs.existsSync(this.#path)) return '[500] DB file does not exists'
-        const result = await productManager.getProductsById(pid)
+        const result = await productManager.getProductById(pid)
         if(typeof result == 'string' ) return `[404] product with ID=${pid} was not found`
         const cart = await this.getProductsFromCart(cid)
         if(typeof cart == 'string') return `[404] cart with ID=${cid} was not found`
@@ -60,7 +60,7 @@ export class CartManager {
         } else {
             cart.products.push({ product: pid, quantity: 1})
         }
-        let data = await fs.promises.readfile(this.#path, 'utf-8')
+        let data = await fs.promises.readFile(this.#path, 'utf-8')
         let carts =JSON.parse(data)
         carts = carts.map(item => {
             if (item.id === cid) {

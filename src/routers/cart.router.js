@@ -30,14 +30,9 @@ router.post('/:cid/product/:pid', async (req, res) =>{
     const result = carts.find((cart) => cart.id === cid)
     if(!result) return res.status(404).json({ status: "error", error: `Cart id: ${cid} does not exist` });
     const idProduct = result.products.find((product) => product.pid === pid)
-    if(!idProduct) {
-        result.products.push({ pid: pid,quantity:1})
-    } else {
-        const index= result.products.findIndex((product) => product.pid === pid)
-        result.products[index].quantity++
-    }
+   
 
-    const newCart = await cartManager.updateCart(cid, result)
+    const newCart = await addProductToCart(cid, result)
     res.status(201).json({ status: "success", payload: newCart });
 
 })
