@@ -7,18 +7,18 @@ import viewsRouter from './routers/view.router.js'
 
 const app = express()
 app.use(express.json())
-app.use(express.static('./src/public'))
+app.use(express.static('./src/public/js'))
 app.engine('handlebars', handlebars.engine())
-app.set('views', './src/views')
+app.set('views', './src/views/layouts')
 app.set('view engine', 'handlebars')
 
-app.get('/', (res, req) => res.render('index'))
+
 app.use('/api/products', productsRouter)
 app.use('/api/carts', cartsRouter)
 app.use('/products', viewsRouter)
 
 const server = app.listen(8080, () => console.log('server up'))
-const io = new server(server)
+const io = new Server(server)
 
 io.on('connection', socket => {
     console.log('New client connected')
