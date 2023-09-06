@@ -9,7 +9,7 @@ const app = express()
 app.use(express.json())
 app.use(express.static('./src/public/js'))
 app.engine('handlebars', handlebars.engine())
-app.set('views', './src/views/layouts')
+app.set('views', './src/views')
 app.set('view engine', 'handlebars')
 
 
